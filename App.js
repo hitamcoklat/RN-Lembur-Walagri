@@ -1,35 +1,21 @@
 import React, {Component} from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Drawer } from 'native-base';
+import { createStackNavigator } from 'react-navigation';
+import PageHome from './component/PageHome';
+import PageCariFaskes from './component/PageCari';
+import PageContact from './component/PageContact';
 
-/*Component*/
-
-import Sidebar from './component/sidebar';
-import AppHeader from './component/AppHeader';
-import AppBody from './component/AppBody';
-
-/*Component*/
-
-type Props = {};
-export default class App extends Component<Props> {
-
-  closeDrawer = () => {
-    this.drawer._root.close()
-  };
-  openDrawer = () => {
-    console.log('masuk kesini');
-    this.drawer._root.open()
-  };
+export default class App extends Component {
 
   render() {
     return (
-        <Drawer
-          ref={(ref) => { this.drawer = ref; }}
-          content={<Sidebar/>}
-          onClose={() => this.closeDrawer()} >
-          <AppHeader openDrawer={this.openDrawer.bind(this)} />
-          <AppBody />
-        </Drawer>
+      <AppStackNavigator />
     );
   }
+
 }
+
+const AppStackNavigator = createStackNavigator({
+  Home: PageHome,
+  CariFaskes: PageCariFaskes,
+  PageContact: PageContact
+});

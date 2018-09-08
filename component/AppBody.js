@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  View
 } from 'react-native';
-
-import { Badge, Container, Content, Title, Footer, FooterTab, Button, Icon, Text } from 'native-base';
+import { Badge, Container, Content, Title, Footer, FooterTab, Button, Icon, Text, View, Fab } from 'native-base';
 import Mapbox from '@mapbox/react-native-mapbox-gl';
-
 Mapbox.setAccessToken('pk.eyJ1IjoiaGl0YW1jb2tsYXQiLCJhIjoiY2prbmZmOHcyMHJhczNybW5rbWhvMmNqYSJ9.xJu-SnSLbjIO6z-pmzn2Vw');
 
 export default class AppBody extends Component {
@@ -33,11 +30,11 @@ export default class AppBody extends Component {
 
   renderAnnotations () {
     this.state.arrayKordinat.map((y) => {
-      console.log(y.title);
     });
   }
 
   render() {
+    console.log(this.props.changePage);
     return (
           <Container>
             <Mapbox.MapView
@@ -47,25 +44,33 @@ export default class AppBody extends Component {
                 style={styles.container}>
                 {this.renderAnnotations()}
             </Mapbox.MapView>
+            <View>
+              <Fab
+                active={this.state.active}
+                direction="up"
+                containerStyle={{ }}
+                style={{ backgroundColor: '#5067FF' }}
+                position="bottomRight">
+                <Icon name="map-o" />
+              </Fab>
+            </View>            
             <Footer>
               <FooterTab>
-                <Button badge vertical>
-                  <Badge><Text>2</Text></Badge>
-                  <Icon name="apps" />
-                  <Text>Profil</Text>
+                <Button vertical>
+                  <Icon name="heartbeat" />
+                  <Text>Sekitar</Text>
+                </Button>
+                <Button onPress={() => this.props.navigation.navigate('CariFaskes')} vertical>
+                  <Icon name="search" />
+                  <Text>Cari</Text>
                 </Button>
                 <Button vertical>
-                  <Icon name="camera" />
-                  <Text>Info</Text>
+                  <Icon name="book" />
+                  <Text>Germas</Text>
                 </Button>
-                <Button active badge vertical>
-                  <Badge ><Text>51</Text></Badge>
-                  <Icon active name="navigate" />
+                <Button onPress={() => this.props.navigation.navigate('PageContact')} vertical>
+                  <Icon name="feed" />
                   <Text>Hubungi</Text>
-                </Button>
-                <Button vertical>
-                  <Icon name="person" />
-                  <Text>Contact</Text>
                 </Button>
               </FooterTab>
             </Footer>

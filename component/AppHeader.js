@@ -14,11 +14,11 @@ export default class AppHeader extends Component {
 		        <Button transparent
 		          onPress={()=>this.props.openDrawer()}
 		        >
-		          <Icon name='menu' />
+		          <Icon name='bars' />
 		        </Button>
 		      </Left>
 		      <Body>
-		        <Title>Lembur Walagri</Title>
+		        <Title>Lembur Walagri</Title>		          
 		      </Body>
 		      <Right />
 		    </Header>
