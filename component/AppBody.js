@@ -51,7 +51,7 @@ export default class AppBody extends Component {
                 containerStyle={{ }}
                 style={{ backgroundColor: '#5067FF' }}
                 position="bottomRight">
-                <Icon name="map-o" />
+                <Icon name="street-view" />
               </Fab>
             </View>            
             <Footer>
@@ -64,7 +64,7 @@ export default class AppBody extends Component {
                   <Icon name="search" />
                   <Text>Cari</Text>
                 </Button>
-                <Button vertical>
+                <Button onPress={() => this.props.navigation.navigate('PageArtikel')} vertical>
                   <Icon name="book" />
                   <Text>Germas</Text>
                 </Button>

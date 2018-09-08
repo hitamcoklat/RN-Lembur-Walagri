@@ -3,6 +3,7 @@ import { createStackNavigator } from 'react-navigation';
 import PageHome from './component/PageHome';
 import PageCariFaskes from './component/PageCari';
 import PageContact from './component/PageContact';
+import PageArtikel from './component/PageArtikel';
 
 export default class App extends Component {
 
@@ -17,5 +18,6 @@ export default class App extends Component {
 const AppStackNavigator = createStackNavigator({
   Home: PageHome,
   CariFaskes: PageCariFaskes,
-  PageContact: PageContact
+  PageContact: PageContact,
+  PageArtikel: PageArtikel
 });
