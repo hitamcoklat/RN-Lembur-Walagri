@@ -20,21 +20,45 @@ export default class AppBody extends Component {
         },
         {
           'id': 2,
-          'lat': 107.601106, 
-          'long': -6.900852,
+          'lat': -6.900852, 
+          'long': 107.601106,
           'title': 'Masakan Padang di Bandung!'
         }     
       ]
     };
   }
 
+  renderPointAnnotation = (marker) => {
+    var key = marker.id;
+    var id = 'id-' + marker.id;
+    var title = marker.title;
+
+    return (
+      <Mapbox.PointAnnotation
+        key={key}
+        id={id}
+        coordinate={[marker.long, marker.lat]}>
+
+        <View style={styles.annotationContainer}>
+          <View style={styles.annotationFill} />
+        </View>
+        <Mapbox.Callout title={title} />
+      </Mapbox.PointAnnotation>
+    );    
+  }
+
   renderAnnotations () {
+    console.log(this.state.arrayKordinat.length);
+    const annotations = [];
     this.state.arrayKordinat.map((y) => {
+      const point = this.renderPointAnnotation(y);
+      annotations.push(point);
     });
+    console.log(annotations);
+    return annotations;
   }
 
   render() {
-    console.log(this.props.changePage);
     return (
           <Container>
             <Mapbox.MapView
