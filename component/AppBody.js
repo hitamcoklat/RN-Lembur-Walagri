@@ -1,35 +1,29 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Image
+  Image,
+  ScrollView,
+  Dimensions,
+  WebView
 } from 'react-native';
 import { Badge, Container, Content, Title, Footer, FooterTab, Button, Icon, Text, View, Fab } from 'native-base';
+import PopupDialog, { DialogTitle, SlideAnimation } from 'react-native-popup-dialog';
+import HTML from 'react-native-render-html';
 import Mapbox from '@mapbox/react-native-mapbox-gl';
 Mapbox.setAccessToken('pk.eyJ1IjoiaGl0YW1jb2tsYXQiLCJhIjoiY2prbmZmOHcyMHJhczNybW5rbWhvMmNqYSJ9.xJu-SnSLbjIO6z-pmzn2Vw');
 
 import customMarker from '../assets/icon-marker.png';
+import dataSample from '../assets/data-sample.json';
 
 export default class AppBody extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      arrayKordinat: [
-        {
-          'id': 1,
-          'lat': -6.898493,
-          'long': 107.598531,
-          'title': 'Rumah Sakit Hasan Sadikin! \n Germas adalah suatu kebijakan pemerintah yang di kemas dalam bentuk kegiatan terpadu dan terkonsep yang harus'
-        },
-        {
-          'id': 2,
-          'lat': -6.900852, 
-          'long': 107.601106,
-          'title': 'Masakan Padang di Bandung!'
-        }     
-      ],
+      arrayKordinat: dataSample,
       lokasiLongitude: 0,
       lokasiLatitude: 0,
+      infoContent: '<p>homina</p>'
     };
   }
 
@@ -37,8 +31,12 @@ export default class AppBody extends Component {
     navigator.geolocation.getCurrentPosition(this.getUserCoordinate, this.error);
   }
 
-  detailFaskes() {
-    console.log('Detail di klik!');
+  detailFaskes(ids) {
+    const idFaskes = ids - 1;
+    var desc = this.state.arrayKordinat[idFaskes].text;
+    this.setState({infoContent: desc}, function () {
+        this.popupDialog.show();
+    });
   }
 
   renderPointAnnotation = (marker) => {
@@ -53,14 +51,14 @@ export default class AppBody extends Component {
         anchor={{ x: 0.5, y: 1 }} 
         coordinate={[marker.long, marker.lat]}>
 
-        <Mapbox.Callout title={title}
+        <Mapbox.Callout
           key={key}
           id={id}        
         >
           <View style={styles.annotationContainer}>
             <View style={styles.annotationFill} />
             <Text style={{ marginBottom: 5 }}>{title}</Text>
-            <Button onPress={() => this.detailFaskes() } block primary>
+            <Button onPress={() => this.detailFaskes(key) } block primary>
               <Text>Info</Text>
             </Button>            
           </View>
@@ -90,6 +88,10 @@ export default class AppBody extends Component {
   }
 
   render() {
+
+    const slideAnimation = new SlideAnimation({
+      slideFrom: 'bottom',
+    });  
     
     return (
           <Container>
@@ -110,7 +112,7 @@ export default class AppBody extends Component {
                 position="bottomRight">
                 <Icon name="street-view" />
               </Fab>
-            </View>            
+            </View>           
             <Footer>
               <FooterTab>
                 <Button vertical>
@@ -131,6 +133,17 @@ export default class AppBody extends Component {
                 </Button>
               </FooterTab>
             </Footer>
+            <PopupDialog
+              dialogTitle={<DialogTitle title="Sekilas Info" />}
+              ref={(popupDialog) => { this.popupDialog = popupDialog; }}
+              dialogAnimation={slideAnimation}
+            >
+                <ScrollView style={{ flex: 1 }}>
+                  <View style={{ padding: 20 }}>
+                        <HTML html={this.state.infoContent} imagesMaxWidth={Dimensions.get('window').width - 40} />
+                  </View>
+                </ScrollView>
+            </PopupDialog>             
           </Container>
     );
   }
