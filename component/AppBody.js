@@ -39,6 +39,13 @@ export default class AppBody extends Component {
     });
   }
 
+  centerMap() {
+    console.log(this.map);
+    this.map.setCamera({
+      centerCoordinate: [this.state.lokasiLongitude, this.state.lokasiLatitude]
+    });
+  }
+
   renderPointAnnotation = (marker) => {
     var key = marker.id;
     var id = 'id-' + marker.id;
@@ -96,15 +103,18 @@ export default class AppBody extends Component {
     return (
           <Container>
             <Mapbox.MapView
+                ref={(e) => { this.map = e; }}
                 styleURL={Mapbox.StyleURL.Street}
                 zoomLevel={15}
                 logoEnabled={false}
+                animated={true}
                 centerCoordinate={[this.state.lokasiLongitude, this.state.lokasiLatitude]}
                 style={styles.container}> 
                 {this.renderAnnotations()}
             </Mapbox.MapView>
             <View>
               <Fab
+                onPress={() => this.centerMap() }
                 active={this.state.active}
                 direction="up"
                 containerStyle={{ }}
