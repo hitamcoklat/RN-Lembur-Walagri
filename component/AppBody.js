@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
+  Image
 } from 'react-native';
 import { Badge, Container, Content, Title, Footer, FooterTab, Button, Icon, Text, View, Fab } from 'native-base';
 import Mapbox from '@mapbox/react-native-mapbox-gl';
 Mapbox.setAccessToken('pk.eyJ1IjoiaGl0YW1jb2tsYXQiLCJhIjoiY2prbmZmOHcyMHJhczNybW5rbWhvMmNqYSJ9.xJu-SnSLbjIO6z-pmzn2Vw');
+
+import customMarker from '../assets/icon-marker.png';
 
 export default class AppBody extends Component {
 
@@ -16,7 +19,7 @@ export default class AppBody extends Component {
           'id': 1,
           'lat': -6.898493,
           'long': 107.598531,
-          'title': 'Rumah Sakit Hasan Sadikin!'
+          'title': 'Rumah Sakit Hasan Sadikin! \n Germas adalah suatu kebijakan pemerintah yang di kemas dalam bentuk kegiatan terpadu dan terkonsep yang harus'
         },
         {
           'id': 2,
@@ -24,8 +27,18 @@ export default class AppBody extends Component {
           'long': 107.601106,
           'title': 'Masakan Padang di Bandung!'
         }     
-      ]
+      ],
+      lokasiLongitude: 0,
+      lokasiLatitude: 0,
     };
+  }
+
+  componentWillMount() {
+    navigator.geolocation.getCurrentPosition(this.getUserCoordinate, this.error);
+  }
+
+  detailFaskes() {
+    console.log('Detail di klik!');
   }
 
   renderPointAnnotation = (marker) => {
@@ -37,35 +50,55 @@ export default class AppBody extends Component {
       <Mapbox.PointAnnotation
         key={key}
         id={id}
+        anchor={{ x: 0.5, y: 1 }} 
         coordinate={[marker.long, marker.lat]}>
 
-        <View style={styles.annotationContainer}>
-          <View style={styles.annotationFill} />
-        </View>
-        <Mapbox.Callout title={title} />
+        <Mapbox.Callout title={title}
+          key={key}
+          id={id}        
+        >
+          <View style={styles.annotationContainer}>
+            <View style={styles.annotationFill} />
+            <Text style={{ marginBottom: 5 }}>{title}</Text>
+            <Button onPress={() => this.detailFaskes() } block primary>
+              <Text>Info</Text>
+            </Button>            
+          </View>
+        </Mapbox.Callout>  
+
       </Mapbox.PointAnnotation>
     );    
   }
 
   renderAnnotations () {
-    console.log(this.state.arrayKordinat.length);
     const annotations = [];
     this.state.arrayKordinat.map((y) => {
       const point = this.renderPointAnnotation(y);
       annotations.push(point);
     });
-    console.log(annotations);
     return annotations;
   }
 
+  getUserCoordinate = (pos) => {
+    var crd = pos.coords;
+    this.state.lokasiLongitude = crd.longitude;
+    this.state.lokasiLatitude  = crd.latitude;
+  }
+
+  error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  }
+
   render() {
+    
     return (
           <Container>
             <Mapbox.MapView
                 styleURL={Mapbox.StyleURL.Street}
                 zoomLevel={15}
-                centerCoordinate={[107.600439, -6.901062]}
-                style={styles.container}>
+                logoEnabled={false}
+                centerCoordinate={[this.state.lokasiLongitude, this.state.lokasiLatitude]}
+                style={styles.container}> 
                 {this.renderAnnotations()}
             </Mapbox.MapView>
             <View>
@@ -108,18 +141,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   annotationContainer: {
-    width: 30,
-    height: 30,
+    width: 200,
+    padding: 20,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
     borderRadius: 15,
   },
   annotationFill: {
-    width: 30,
-    height: 30,
+    width: 100,
     borderRadius: 15,
-    backgroundColor: 'orange',
+    backgroundColor: 'blue',
     transform: [{ scale: 0.6 }],
   }
 });
