@@ -42,7 +42,9 @@ export default class AppBody extends Component {
   centerMap() {
     console.log(this.map);
     this.map.setCamera({
-      centerCoordinate: [this.state.lokasiLongitude, this.state.lokasiLatitude]
+      centerCoordinate: [this.state.lokasiLongitude, this.state.lokasiLatitude],
+      zoom: 15,
+      duration: 2000,      
     });
   }
 
@@ -56,8 +58,9 @@ export default class AppBody extends Component {
         key={key}
         id={id}
         anchor={{ x: 0.5, y: 1 }} 
-        coordinate={[marker.long, marker.lat]}>
-
+        coordinate={[marker.long, marker.lat]}>        
+        <Image      
+          source={require('../assets/icon-marker.png')} style={{ width: 32, height: 42 }}/>
         <Mapbox.Callout
           key={key}
           id={id}        
@@ -69,8 +72,7 @@ export default class AppBody extends Component {
               <Text>Info</Text>
             </Button>            
           </View>
-        </Mapbox.Callout>  
-
+        </Mapbox.Callout>          
       </Mapbox.PointAnnotation>
     );    
   }
@@ -101,7 +103,7 @@ export default class AppBody extends Component {
     });  
     
     return (
-          <Container>
+          <Container>          
             <Mapbox.MapView
                 ref={(e) => { this.map = e; }}
                 styleURL={Mapbox.StyleURL.Street}
@@ -109,8 +111,8 @@ export default class AppBody extends Component {
                 logoEnabled={false}
                 animated={true}
                 centerCoordinate={[this.state.lokasiLongitude, this.state.lokasiLatitude]}
-                style={styles.container}> 
-                {this.renderAnnotations()}
+                style={styles.container}>
+                {this.renderAnnotations()}               
             </Mapbox.MapView>
             <View>
               <Fab
@@ -158,6 +160,15 @@ export default class AppBody extends Component {
     );
   }
 }
+
+const stylesMap = Mapbox.StyleSheet.create({
+  icon: {
+    iconImage: customMarker,
+    iconAllowOverlap: true,
+    iconSize: 0.5,
+  } 
+});
+
 
 const styles = StyleSheet.create({
   container: {

@@ -51,6 +51,7 @@
 		6DB44E6176F74B99A6B8CE81 /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E77F9726544241C08ED22303 /* rubicon-icon-font.ttf */; };
 		DC6800DEEDE545EDBA63766A /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83C87979E04447CFA395E44D /* SimpleLineIcons.ttf */; };
 		280D028B3AE24B3B9167B6E5 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 41DAA19C16074F00A78D4938 /* Zocial.ttf */; };
+		E7899F60A648440BB91B0E75 /* libRCTMGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ECA640FCBC04F3A9850793C /* libRCTMGL.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -370,6 +371,8 @@
 		E77F9726544241C08ED22303 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		83C87979E04447CFA395E44D /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		41DAA19C16074F00A78D4938 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		529E51DD805247B4A9636897 /* RCTMGL.xcodeproj */ = {isa = PBXFileReference; name = "RCTMGL.xcodeproj"; path = "../node_modules/@mapbox/react-native-mapbox-gl/ios/RCTMGL.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		7ECA640FCBC04F3A9850793C /* libRCTMGL.a */ = {isa = PBXFileReference; name = "libRCTMGL.a"; path = "libRCTMGL.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -398,6 +401,7 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				E7899F60A648440BB91B0E75 /* libRCTMGL.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,6 +588,7 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
+				529E51DD805247B4A9636897 /* RCTMGL.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1245,6 +1250,14 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/kampungWalagri.app/kampungWalagri";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/@mapbox/react-native-mapbox-gl/ios/RCTMGL",
+				);
 			};
 			name = Debug;
 		};
@@ -1262,6 +1275,14 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/kampungWalagri.app/kampungWalagri";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/@mapbox/react-native-mapbox-gl/ios/RCTMGL",
+				);
 			};
 			name = Release;
 		};
@@ -1280,6 +1301,10 @@
 				);
 				PRODUCT_NAME = kampungWalagri;
 				VERSIONING_SYSTEM = "apple-generic";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/@mapbox/react-native-mapbox-gl/ios/RCTMGL",
+				);
 			};
 			name = Debug;
 		};
@@ -1297,6 +1322,10 @@
 				);
 				PRODUCT_NAME = kampungWalagri;
 				VERSIONING_SYSTEM = "apple-generic";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/@mapbox/react-native-mapbox-gl/ios/RCTMGL",
+				);
 			};
 			name = Release;
 		};
@@ -1323,6 +1352,14 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/@mapbox/react-native-mapbox-gl/ios/RCTMGL",
+				);
 			};
 			name = Debug;
 		};
@@ -1349,6 +1386,14 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/@mapbox/react-native-mapbox-gl/ios/RCTMGL",
+				);
 			};
 			name = Release;
 		};
@@ -1374,6 +1419,14 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/kampungWalagri-tvOS.app/kampungWalagri-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/@mapbox/react-native-mapbox-gl/ios/RCTMGL",
+				);
 			};
 			name = Debug;
 		};
@@ -1399,6 +1452,14 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/kampungWalagri-tvOS.app/kampungWalagri-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/@mapbox/react-native-mapbox-gl/ios/RCTMGL",
+				);
 			};
 			name = Release;
 		};
