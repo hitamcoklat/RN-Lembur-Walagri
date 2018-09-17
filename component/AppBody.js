@@ -20,21 +20,28 @@ export default class AppBody extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      arrayKordinat: dataSample,
+      arrayKordinat: [],
       lokasiLongitude: 0,
       lokasiLatitude: 0,
-      infoContent: '<p>homina</p>'
+      infoContent: '<p>homina</p>',
+      imageURL: 'https://facebook.github.io/react/img/logo_og.png',
+      // apiURL: 'http://192.168.58.1:3222' // server local
+      apiURL: 'http://202.150.151.50:3701' // server online
     };
   }
 
   componentWillMount() {
     navigator.geolocation.getCurrentPosition(this.getUserCoordinate, this.error);
+    this.getAllFaskes();
   }
 
   detailFaskes(ids) {
-    const idFaskes = ids - 1;
-    var desc = this.state.arrayKordinat[idFaskes].text;
-    this.setState({infoContent: desc}, function () {
+    const idFaskes = ids;
+    var desc = this.state.arrayKordinat[idFaskes].deskripsi;
+    this.setState({
+      infoContent: desc,
+      imageURL: this.state.apiURL + '/uploads/' + this.state.arrayKordinat[idFaskes].image_file_thumb
+      }, function () {
         this.popupDialog.show();
     });
   }
@@ -48,10 +55,25 @@ export default class AppBody extends Component {
     });
   }
 
-  renderPointAnnotation = (marker) => {
-    var key = marker.id;
-    var id = 'id-' + marker.id;
-    var title = marker.title;
+  getAllFaskes() {
+    return fetch(this.state.apiURL + '/api/getAll')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({
+          arrayKordinat: responseJson.data
+        });
+        // return responseJson.movies;
+      })      
+      .catch((error) => {
+        console.error(error);
+      });    
+  }
+
+  renderPointAnnotation = (marker, index) => {
+    var key = index;
+    var id = 'id-' + index;
+    var title = marker.nama_faskes;
+    var iconPin = this.state.apiURL + '/icon/icon-' + marker.jenis + '.png';
 
     return (
       <Mapbox.PointAnnotation
@@ -59,8 +81,8 @@ export default class AppBody extends Component {
         id={id}
         anchor={{ x: 0.5, y: 1 }} 
         coordinate={[marker.long, marker.lat]}>        
-        <Image      
-          source={require('../assets/icon-marker.png')} style={{ width: 32, height: 42 }}/>
+        <Image
+          source={{ uri: iconPin }} style={{ width: 32, height: 42 }}/>
         <Mapbox.Callout
           key={key}
           id={id}        
@@ -79,8 +101,8 @@ export default class AppBody extends Component {
 
   renderAnnotations () {
     const annotations = [];
-    this.state.arrayKordinat.map((y) => {
-      const point = this.renderPointAnnotation(y);
+    this.state.arrayKordinat.map((y, i) => {
+      const point = this.renderPointAnnotation(y, i);
       annotations.push(point);
     });
     return annotations;
@@ -149,9 +171,14 @@ export default class AppBody extends Component {
               dialogTitle={<DialogTitle title="Sekilas Info" />}
               ref={(popupDialog) => { this.popupDialog = popupDialog; }}
               dialogAnimation={slideAnimation}
+              height={0.7}
             >
                 <ScrollView style={{ flex: 1 }}>
                   <View style={{ padding: 20 }}>
+                        <Image
+                          style={{height: Math.round(Dimensions.get('window').width * 9 / 16), width: Dimensions.get('window').width - 40}}
+                          source={{ uri: '' + this.state.imageURL + '' }}
+                        />                                     
                         <HTML html={this.state.infoContent} imagesMaxWidth={Dimensions.get('window').width - 40} />
                   </View>
                 </ScrollView>
