@@ -26,13 +26,23 @@ export default class AppBody extends Component {
       infoContent: '<p>homina</p>',
       imageURL: 'https://facebook.github.io/react/img/logo_og.png',
       // apiURL: 'http://192.168.58.1:3222' // server local
-      apiURL: 'http://202.150.151.50:3701' // server online
+      apiURL: 'http://app.diskes.jabarprov.go.id:3701' // server online
     };
   }
 
-  componentWillMount() {
-    navigator.geolocation.getCurrentPosition(this.getUserCoordinate, this.error);
-    this.getAllFaskes();
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({
+          lokasiLatitude: position.coords.latitude,
+          lokasiLongitude: position.coords.longitude,
+          error: null,
+        });
+        this.getAllFaskes(position.coords.latitude, position.coords.longitude);
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
   }
 
   detailFaskes(ids) {
@@ -55,8 +65,8 @@ export default class AppBody extends Component {
     });
   }
 
-  getAllFaskes() {
-    return fetch(this.state.apiURL + '/api/getAll')
+  getAllFaskes(lat, long) {
+    return fetch(this.state.apiURL + '/api/getNearby?long=' + long + '&lat=' + lat)
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({
@@ -106,12 +116,6 @@ export default class AppBody extends Component {
       annotations.push(point);
     });
     return annotations;
-  }
-
-  getUserCoordinate = (pos) => {
-    var crd = pos.coords;
-    this.state.lokasiLongitude = crd.longitude;
-    this.state.lokasiLatitude  = crd.latitude;
   }
 
   error(err) {
