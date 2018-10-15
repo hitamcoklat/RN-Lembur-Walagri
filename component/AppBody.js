@@ -23,10 +23,12 @@ export default class AppBody extends Component {
       arrayKordinat: [],
       lokasiLongitude: 0,
       lokasiLatitude: 0,
-      infoContent: '<p>homina</p>',
+      kodeFaskes: '',
+      showBtnSelengkapnya: false,
+      infoContent: '<p>Data belum tersedia</p>',
       imageURL: 'https://facebook.github.io/react/img/logo_og.png',
-      // apiURL: 'http://192.168.58.1:3222' // server local
-      apiURL: 'http://app.diskes.jabarprov.go.id:3701' // server online
+      apiURL: 'http://192.168.58.1:3222' // server local
+      // apiURL: 'http://app.diskes.jabarprov.go.id:3701' // server online
     };
   }
 
@@ -36,22 +38,27 @@ export default class AppBody extends Component {
         this.setState({
           lokasiLatitude: position.coords.latitude,
           lokasiLongitude: position.coords.longitude,
-          error: null,
         });
         this.getAllFaskes(position.coords.latitude, position.coords.longitude);
       },
-      (error) => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }
 
   detailFaskes(ids) {
     const idFaskes = ids;
     var desc = this.state.arrayKordinat[idFaskes].deskripsi;
+
+    // Jika ada kode faskes
+    if(typeof this.state.arrayKordinat[idFaskes].kode_faskes != 'undefined') {
+      this.setState({ showBtnSelengkapnya: true })
+    }
+
     this.setState({
       infoContent: desc,
+      kodeFaskes: this.state.arrayKordinat[idFaskes].kode_faskes,
       imageURL: this.state.apiURL + '/uploads/' + this.state.arrayKordinat[idFaskes].image_file_thumb
       }, function () {
+        // munculkan pop up dialog
         this.popupDialog.show();
     });
   }
@@ -126,7 +133,7 @@ export default class AppBody extends Component {
 
     const slideAnimation = new SlideAnimation({
       slideFrom: 'bottom',
-    });  
+    });
     
     return (
           <Container>          
@@ -178,12 +185,19 @@ export default class AppBody extends Component {
               height={0.7}
             >
                 <ScrollView style={{ flex: 1 }}>
-                  <View style={{ padding: 20 }}>
+                  <View style={{ 
+                    paddingRight: 20, 
+                    paddingLeft: 20, 
+                    paddingTop: 20, 
+                    paddingBottom: 50 }}>
                         <Image
-                          style={{height: Math.round(Dimensions.get('window').width * 9 / 16), width: Dimensions.get('window').width - 40}}
+                          style={{height: Math.round(Dimensions.get('window').width * 9 / 16), width: Dimensions.get('window').width - 40, marginBottom: 20}}
                           source={{ uri: '' + this.state.imageURL + '' }}
                         />                                     
                         <HTML html={this.state.infoContent} imagesMaxWidth={Dimensions.get('window').width - 40} />
+                        
+                        { (this.state.showBtnSelengkapnya == true) ? (<Button onPress={() => this.props.navigation.navigate('DetailFaskes', { kodeFaskes: this.state.kodeFaskes })} block primary><Text>Selengkapnya</Text></Button>) : (<Text></Text>) }
+                        
                   </View>
                 </ScrollView>
             </PopupDialog>             
