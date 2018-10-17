@@ -4,7 +4,7 @@ import PageHome from './component/PageHome';
 import PageCariFaskes from './component/PageCari';
 import PageContact from './component/PageContact';
 import PageArtikel from './component/PageArtikel';
-import DetailFaskes from './component/DetailFaskes';
+import DetailFaskesRS from './component/DetailFaskesRS';
 
 export default class App extends Component {
 
@@ -21,5 +21,5 @@ const AppStackNavigator = createStackNavigator({
   CariFaskes: PageCariFaskes,
   PageContact: PageContact,
   PageArtikel: PageArtikel,
-  DetailFaskes: DetailFaskes
+  DetailFaskesRS: DetailFaskesRS
 });

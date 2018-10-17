@@ -27,8 +27,8 @@ export default class AppBody extends Component {
       showBtnSelengkapnya: false,
       infoContent: '<p>Data belum tersedia</p>',
       imageURL: 'https://facebook.github.io/react/img/logo_og.png',
-      apiURL: 'http://192.168.58.1:3222' // server local
-      // apiURL: 'http://app.diskes.jabarprov.go.id:3701' // server online
+      // apiURL: 'http://192.168.58.1:3222' // server local
+      apiURL: 'http://app.diskes.jabarprov.go.id:3701' // server online
     };
   }
 
@@ -168,10 +168,6 @@ export default class AppBody extends Component {
                   <Icon name="search" />
                   <Text>Cari</Text>
                 </Button>
-                <Button onPress={() => this.props.navigation.navigate('PageArtikel')} vertical>
-                  <Icon name="book" />
-                  <Text>Germas</Text>
-                </Button>
                 <Button onPress={() => this.props.navigation.navigate('PageContact')} vertical>
                   <Icon name="feed" />
                   <Text>Hubungi</Text>
@@ -196,7 +192,7 @@ export default class AppBody extends Component {
                         />                                     
                         <HTML html={this.state.infoContent} imagesMaxWidth={Dimensions.get('window').width - 40} />
                         
-                        { (this.state.showBtnSelengkapnya == true) ? (<Button onPress={() => this.props.navigation.navigate('DetailFaskes', { kodeFaskes: this.state.kodeFaskes })} block primary><Text>Selengkapnya</Text></Button>) : (<Text></Text>) }
+                        { (this.state.showBtnSelengkapnya == true) ? (<Button onPress={() => this.props.navigation.navigate('DetailFaskesRS', { kodeFaskes: this.state.kodeFaskes })} block primary><Text>Selengkapnya</Text></Button>) : (<Text></Text>) }
                         
                   </View>
                 </ScrollView>
