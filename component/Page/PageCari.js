@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { StyleProvider, Form, Item, Input, Label, Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, CardItem, Card } from 'native-base';
-import getTheme from '../native-base-theme/components';
-import platform from '../native-base-theme/variables/platform';
+import getTheme from '../../native-base-theme/components';
+import platform from '../../native-base-theme/variables/platform';
+import { ImageBackground, StyleSheet } from 'react-native';
 
 export default class PageCari extends Component {
 
@@ -23,6 +24,8 @@ export default class PageCari extends Component {
           </Body>
           <Right />
         </Header>
+          <ImageBackground source={ require('../../assets/bg-lemburWalagri.png') }
+            style={styles.backgroundImage}>        
         <Content>
           <Card>
             <CardItem>
@@ -33,18 +36,28 @@ export default class PageCari extends Component {
               </Body>
             </CardItem>
           </Card>        
-          <Form>
-            <Item floatingLabel>
+          <Card style={{ backgroundColor:'transparent' }}>
+            <Item style={{ backgroundColor: '#FFFFFF', padding: 10, borderRadius: 10 }} floatingLabel>
               <Label>Masukan Nama Faskes</Label>
               <Input />
             </Item> 
-            <Button style={{ marginTop: 30 }} block info>
+            <Button style={{ marginTop: 30 }} rounded block primary>
               <Text>Klik untuk mencari</Text>
             </Button>                       
-          </Form>          
+          </Card>          
         </Content>
+        </ImageBackground>
       </Container>
       </StyleProvider>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'cover'    
+  }
+});

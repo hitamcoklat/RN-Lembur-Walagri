@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Image, Dimensions } from 'react-native';
 import { StyleProvider, Container, Title, Header, Right, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
-import getTheme from '../native-base-theme/components';
-import platform from '../native-base-theme/variables/platform';
+import getTheme from '../../native-base-theme/components';
+import platform from '../../native-base-theme/variables/platform';
 
 export default class PageArtikel extends Component {
 

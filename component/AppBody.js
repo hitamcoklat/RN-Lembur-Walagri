@@ -13,7 +13,6 @@ import Mapbox from '@mapbox/react-native-mapbox-gl';
 Mapbox.setAccessToken('pk.eyJ1IjoiaGl0YW1jb2tsYXQiLCJhIjoiY2prbmZmOHcyMHJhczNybW5rbWhvMmNqYSJ9.xJu-SnSLbjIO6z-pmzn2Vw');
 
 import customMarker from '../assets/icon-marker.png';
-import dataSample from '../assets/data-sample.json';
 
 export default class AppBody extends Component {
 
@@ -64,7 +63,6 @@ export default class AppBody extends Component {
   }
 
   centerMap() {
-    console.log(this.map);
     this.map.setCamera({
       centerCoordinate: [this.state.lokasiLongitude, this.state.lokasiLatitude],
       zoom: 15,
@@ -192,7 +190,7 @@ export default class AppBody extends Component {
                         />                                     
                         <HTML html={this.state.infoContent} imagesMaxWidth={Dimensions.get('window').width - 40} />
                         
-                        { (this.state.showBtnSelengkapnya == true) ? (<Button onPress={() => this.props.navigation.navigate('DetailFaskesRS', { kodeFaskes: this.state.kodeFaskes })} block primary><Text>Selengkapnya</Text></Button>) : (<Text></Text>) }
+                        { (this.state.showBtnSelengkapnya == true) ? (<Button style={{ marginTop: 10 }} onPress={() => this.props.navigation.navigate('DetailFaskesRS', { kodeFaskes: this.state.kodeFaskes })} block rounded bordered primary><Text>Selengkapnya</Text></Button>) : (<Text></Text>) }
                         
                   </View>
                 </ScrollView>

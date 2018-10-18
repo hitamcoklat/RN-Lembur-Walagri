@@ -10,7 +10,7 @@ import AppHeader from './AppHeader';
 import AppBody from './AppBody';
 /*Component*/
 
-export default class PageHome extends Component {
+export default class Home extends Component {
 
   static navigationOptions = {
     header: null
@@ -80,4 +80,4 @@ export default class PageHome extends Component {
   }
 }
 
-module.exports = PageHome;
+module.exports = Home;

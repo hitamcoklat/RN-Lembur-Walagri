@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import { createStackNavigator } from 'react-navigation';
-import PageHome from './component/PageHome';
-import PageCariFaskes from './component/PageCari';
-import PageContact from './component/PageContact';
-import PageArtikel from './component/PageArtikel';
-import DetailFaskesRS from './component/DetailFaskesRS';
+import Home from './component/Home';
+import PageCariFaskes from './component/Page/PageCari';
+import PageContact from './component/Page/PageContact';
+import PageArtikel from './component/Page/PageArtikel';
+import DetailFaskesRS from './component/RumahSakit/DetailFaskesRS';
+import DetailListViewRS from './component/RumahSakit/DetailListViewRS';
+import CommentRS from './component/RumahSakit/CommentRS';
 
 export default class App extends Component {
 
@@ -17,9 +19,11 @@ export default class App extends Component {
 }
 
 const AppStackNavigator = createStackNavigator({
-  Home: PageHome,
+  Home: Home,
   CariFaskes: PageCariFaskes,
   PageContact: PageContact,
   PageArtikel: PageArtikel,
+  DetailListViewRS: DetailListViewRS,
+  CommentRS: CommentRS,
   DetailFaskesRS: DetailFaskesRS
 });

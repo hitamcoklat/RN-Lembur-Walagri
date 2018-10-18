@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleProvider, Container, Title, Button, Header, Content, List, ListItem, Text, Icon, Left, Body, Right, Switch } from "native-base";
-import getTheme from '../native-base-theme/components';
-import platform from '../native-base-theme/variables/platform';
+import getTheme from '../../native-base-theme/components';
+import platform from '../../native-base-theme/variables/platform';
 
 export default class PageContact extends Component {
 
