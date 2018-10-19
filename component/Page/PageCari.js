@@ -37,9 +37,8 @@ export default class PageCari extends Component {
             </CardItem>
           </Card>        
           <Card style={{ backgroundColor:'transparent' }}>
-            <Item style={{ backgroundColor: '#FFFFFF', padding: 10, borderRadius: 10 }} floatingLabel>
-              <Label>Masukan Nama Faskes</Label>
-              <Input />
+            <Item style={{ backgroundColor: '#FFFFFF', padding: 10, borderRadius: 10 }}>
+              <Input style={{ borderBottomWidth: 0.5, borderBottomColor: '#d6d7da' }} />
             </Item> 
             <Button style={{ marginTop: 30 }} rounded block primary>
               <Text>Klik untuk mencari</Text>

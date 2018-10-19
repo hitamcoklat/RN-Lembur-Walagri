@@ -4,6 +4,7 @@ import getTheme from '../../native-base-theme/components';
 import platform from '../../native-base-theme/variables/platform';
 import DetailListViewRS from './DetailListViewRS';
 import { StyleSheet, ImageBackground } from 'react-native';
+import { API_URL } from '../Config';
 import axios from 'axios';
 
 export default class CommentRS extends Component {
@@ -11,8 +12,7 @@ export default class CommentRS extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      apiURL: 'http://192.168.58.1:3222', // server local
-      // apiURL: 'http://app.diskes.jabarprov.go.id:3701', // server local
+      apiURL: API_URL,
       isLoading: true,
     };
   }  

@@ -13,6 +13,8 @@ import Mapbox from '@mapbox/react-native-mapbox-gl';
 Mapbox.setAccessToken('pk.eyJ1IjoiaGl0YW1jb2tsYXQiLCJhIjoiY2prbmZmOHcyMHJhczNybW5rbWhvMmNqYSJ9.xJu-SnSLbjIO6z-pmzn2Vw');
 
 import customMarker from '../assets/icon-marker.png';
+import MenuFooter from './_menuFooter';
+import { API_URL } from './Config';
 
 export default class AppBody extends Component {
 
@@ -26,8 +28,7 @@ export default class AppBody extends Component {
       showBtnSelengkapnya: false,
       infoContent: '<p>Data belum tersedia</p>',
       imageURL: 'https://facebook.github.io/react/img/logo_og.png',
-      // apiURL: 'http://192.168.58.1:3222' // server local
-      apiURL: 'http://app.diskes.jabarprov.go.id:3701' // server online
+      apiURL: API_URL // server online
     };
   }
 
@@ -156,22 +157,9 @@ export default class AppBody extends Component {
                 <Icon name="street-view" />
               </Fab>
             </View>           
-            <Footer>
-              <FooterTab>
-                <Button vertical>
-                  <Icon name="heartbeat" />
-                  <Text>Sekitar</Text>
-                </Button>
-                <Button onPress={() => this.props.navigation.navigate('CariFaskes')} vertical>
-                  <Icon name="search" />
-                  <Text>Cari</Text>
-                </Button>
-                <Button onPress={() => this.props.navigation.navigate('PageContact')} vertical>
-                  <Icon name="feed" />
-                  <Text>Hubungi</Text>
-                </Button>
-              </FooterTab>
-            </Footer>
+            
+            <MenuFooter navigation={this.props.navigation} />
+            
             <PopupDialog
               dialogTitle={<DialogTitle title="Sekilas Info" />}
               ref={(popupDialog) => { this.popupDialog = popupDialog; }}

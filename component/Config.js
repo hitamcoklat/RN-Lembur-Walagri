@@ -1,0 +1,1 @@
+export const API_URL = 'http://app.diskes.jabarprov.go.id:3701';
