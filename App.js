@@ -4,6 +4,7 @@ import Home from './component/Home';
 import PageCariFaskes from './component/Page/PageCari';
 import PageContact from './component/Page/PageContact';
 import PageArtikel from './component/Page/PageArtikel';
+import PageLoginFB from './component/Page/PageLoginFB';
 import DetailFaskesRS from './component/RumahSakit/DetailFaskesRS';
 import DetailListViewRS from './component/RumahSakit/DetailListViewRS';
 import CommentRS from './component/RumahSakit/CommentRS';
@@ -25,5 +26,6 @@ const AppStackNavigator = createStackNavigator({
   PageArtikel: PageArtikel,
   DetailListViewRS: DetailListViewRS,
   CommentRS: CommentRS,
+  PageLoginFB: PageLoginFB,
   DetailFaskesRS: DetailFaskesRS
 });

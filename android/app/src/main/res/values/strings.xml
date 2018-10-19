@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Lembur Walagri</string>
+	<string name="facebook_app_id">345557129525742</string>
+	<string name="fb_login_protocol_scheme">fb345557129525742</string>
+    
 </resources>

@@ -19,7 +19,7 @@ export default class MenuFooter extends Component {
 	          <Text>Hubungi</Text>
 	        </Button>
 	        <Button onPress={() => this.props.navigation.navigate('PageLoginFB')} vertical>
-	          <Icon name="feed" />
+	          <Icon name="user" />
 	          <Text>Login</Text>
 	        </Button>	        
 	      </FooterTab>
