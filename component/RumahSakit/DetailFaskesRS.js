@@ -4,6 +4,7 @@ import getTheme from '../../native-base-theme/components';
 import platform from '../../native-base-theme/variables/platform';
 import DetailListViewRS from './DetailListViewRS';
 import { StyleSheet, ImageBackground } from 'react-native';
+import { API_URL } from '../Config';
 import axios from 'axios';
 
 export default class DetailFaskes extends Component {
@@ -12,10 +13,11 @@ export default class DetailFaskes extends Component {
     super(props);
     this.state = {
       detailFaskes: [],
-      // apiURL: 'http://192.168.58.1:3222', // server local
-      apiURL: 'http://app.diskes.jabarprov.go.id:3701', // server local
+      apiURL: API_URL,
       isLoading: true,
-      dataArray: []
+      dataArray: [],
+      kodeFaskes: '',
+      namaFaskes: '',
     };
   }  
 
@@ -26,6 +28,11 @@ export default class DetailFaskes extends Component {
   componentDidMount() {
     const { navigation } = this.props;
     const kodeFaskes = navigation.getParam('kodeFaskes');
+    const namaFaskes = navigation.getParam('namaFaskes');
+    this.setState({ 
+      kodeFaskes: kodeFaskes,
+      namaFaskes: namaFaskes,
+    });
     this.getDetailFaskes(kodeFaskes);    
   }
 
@@ -55,7 +62,7 @@ export default class DetailFaskes extends Component {
             </Button>
           </Left>
           <Body>
-            <Title>{ this.state.detailFaskes.NAMA_RS }</Title>
+            <Title style={{ marginLeft: -50 }}>{ this.state.detailFaskes.NAMA_RS }</Title>
           </Body>
         </Header>
         <ImageBackground source={ require('../../assets/bg-lemburWalagri.png') }
@@ -64,7 +71,7 @@ export default class DetailFaskes extends Component {
           {(this.isLoading == false) && <Spinner color='blue' />}
           <Card style={{ borderRadius: 10 }}>
             <CardItem header>
-              <Text>Informasi</Text>
+              <Icon style={{ color: '#3F51B5' }} name='info-circle' /><Text style={{ fontWeight: 'bold', color: '#3F51B5', borderBottomWidth: 1 }}>Informasi</Text>
             </CardItem>
             <CardItem>
               <Body>
@@ -80,10 +87,13 @@ export default class DetailFaskes extends Component {
             </CardItem>
             <CardItem footer>
                 <Left>
-                <Button rounded bordered onPress={() => this.props.navigation.navigate('CommentRS')}><Text>Beri Ulasan!</Text></Button>
+                <Button rounded bordered onPress={() => this.props.navigation.navigate('CommentRS', { kodeFaskes: this.state.kodeFaskes, 
+                  namaFaskes: this.state.namaFaskes })}><Icon style={{ color: '#3F51B5', marginRight: -10}} name='comments' /><Text>Ulasan</Text></Button>
                 </Left>
                 <Right>
-                  <Button onPress={() => this.props.navigation.navigate('DetailListViewRS', { detailFaskes: this.state.detailFaskes })} rounded bordered><Text>Info Detail!</Text></Button>
+                  <Button onPress={() => this.props.navigation.navigate('DetailListViewRS', { 
+                    detailFaskes: this.state.detailFaskes                    
+                    })} rounded bordered><Icon style={{ color: '#3F51B5', marginRight: -10}} name='info-circle' /><Text>Info Detail!</Text></Button>
                 </Right>
             </CardItem>
          </Card>                   

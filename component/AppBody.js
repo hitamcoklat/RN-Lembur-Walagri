@@ -4,8 +4,10 @@ import {
   Image,
   ScrollView,
   Dimensions,
-  WebView
+  WebView,
+  NetInfo
 } from 'react-native';
+import Permissions from 'react-native-permissions'
 import { Badge, Container, Content, Title, Footer, FooterTab, Button, Icon, Text, View, Fab } from 'native-base';
 import PopupDialog, { DialogTitle, SlideAnimation } from 'react-native-popup-dialog';
 import HTML from 'react-native-render-html';
@@ -25,7 +27,11 @@ export default class AppBody extends Component {
       lokasiLongitude: 0,
       lokasiLatitude: 0,
       kodeFaskes: '',
-      showBtnSelengkapnya: false,
+      isConnected: true,
+      isLocation: 'authorized',
+      namaFaskes: '',
+      showBtnSelengkapnyaRS: false,
+      showBtnSelengkapnyaPus: false,
       infoContent: '<p>Data belum tersedia</p>',
       imageURL: 'https://facebook.github.io/react/img/logo_og.png',
       apiURL: API_URL // server online
@@ -33,6 +39,7 @@ export default class AppBody extends Component {
   }
 
   componentDidMount() {
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
@@ -44,18 +51,32 @@ export default class AppBody extends Component {
     );
   }
 
+
+  onDismissedDialog() {
+    this.setState({ 
+      showBtnSelengkapnyaRS: false, 
+      showBtnSelengkapnyaPus: false 
+    });
+  }
+
   detailFaskes(ids) {
     const idFaskes = ids;
     var desc = this.state.arrayKordinat[idFaskes].deskripsi;
+    var detailKodeFaskes = this.state.arrayKordinat[idFaskes].kode_faskes;
 
     // Jika ada kode faskes
-    if(typeof this.state.arrayKordinat[idFaskes].kode_faskes != 'undefined') {
-      this.setState({ showBtnSelengkapnya: true })
+    if(typeof detailKodeFaskes != 'undefined' && detailKodeFaskes.includes('P') == false) {
+      this.setState({ showBtnSelengkapnyaRS: true })
     }
+
+    if(typeof detailKodeFaskes != 'undefined' && detailKodeFaskes.includes('P') == true) {
+      this.setState({ showBtnSelengkapnyaPus: true })
+    }    
 
     this.setState({
       infoContent: desc,
       kodeFaskes: this.state.arrayKordinat[idFaskes].kode_faskes,
+      namaFaskes: this.state.arrayKordinat[idFaskes].nama_faskes,
       imageURL: this.state.apiURL + '/uploads/' + this.state.arrayKordinat[idFaskes].image_file_thumb
       }, function () {
         // munculkan pop up dialog
@@ -128,18 +149,28 @@ export default class AppBody extends Component {
     console.warn(`ERROR(${err.code}): ${err.message}`);
   }
 
-  render() {
+  render() {     
 
     const slideAnimation = new SlideAnimation({
       slideFrom: 'bottom',
     });
+
+    let btnDetailForPuskesmas = (this.state.showBtnSelengkapnyaPus == true) ? (
+                        <Button style={{ marginTop: 10 }} 
+                        onPress={() => this.props.navigation.navigate('CommentRS', { kodeFaskes: this.state.kodeFaskes, namaFaskes: this.state.namaFaskes })}  
+                        rounded block bordered success><Icon style={{ marginRight: -10 }} name='comments' /><Text>Ulasan</Text></Button>) : (<Text></Text>);
+
+    let btnDetailForRS = (this.state.showBtnSelengkapnyaRS == true) ? (<Button style={{ marginTop: 10 }} onPress={() => this.props.navigation.navigate('DetailFaskesRS', { 
+                          kodeFaskes: this.state.kodeFaskes,
+                          namaFaskes: this.state.namaFaskes,
+                          })} block rounded bordered primary><Icon style={{ color: '#3F51B5', marginRight: -10}} name='info-circle' /><Text>Selengkapnya</Text></Button>) : (<Text></Text>);
     
-    return (
+    return (       
           <Container>          
             <Mapbox.MapView
                 ref={(e) => { this.map = e; }}
                 styleURL={Mapbox.StyleURL.Street}
-                zoomLevel={15}
+                zoomLevel={13}
                 logoEnabled={false}
                 animated={true}
                 centerCoordinate={[this.state.lokasiLongitude, this.state.lokasiLatitude]}
@@ -164,6 +195,7 @@ export default class AppBody extends Component {
               dialogTitle={<DialogTitle title="Sekilas Info" />}
               ref={(popupDialog) => { this.popupDialog = popupDialog; }}
               dialogAnimation={slideAnimation}
+              onDismissed={() => this.onDismissedDialog()}
               height={0.7}
             >
                 <ScrollView style={{ flex: 1 }}>
@@ -178,7 +210,9 @@ export default class AppBody extends Component {
                         />                                     
                         <HTML html={this.state.infoContent} imagesMaxWidth={Dimensions.get('window').width - 40} />
                         
-                        { (this.state.showBtnSelengkapnya == true) ? (<Button style={{ marginTop: 10 }} onPress={() => this.props.navigation.navigate('DetailFaskesRS', { kodeFaskes: this.state.kodeFaskes })} block rounded bordered primary><Text>Selengkapnya</Text></Button>) : (<Text></Text>) }
+                        { btnDetailForRS }
+
+                        { btnDetailForPuskesmas }
                         
                   </View>
                 </ScrollView>
@@ -214,7 +248,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor: 'blue',
     transform: [{ scale: 0.6 }],
-  }
+  } 
 });
 
 module.exports = AppBody;

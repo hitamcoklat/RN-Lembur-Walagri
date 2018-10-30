@@ -5,9 +5,11 @@ import PageCariFaskes from './component/Page/PageCari';
 import PageContact from './component/Page/PageContact';
 import PageArtikel from './component/Page/PageArtikel';
 import PageLoginFB from './component/Page/PageLoginFB';
+import OfflinePage from './component/Page/OfflinePage';
 import DetailFaskesRS from './component/RumahSakit/DetailFaskesRS';
 import DetailListViewRS from './component/RumahSakit/DetailListViewRS';
 import CommentRS from './component/RumahSakit/CommentRS';
+import LihatCommentRS from './component/RumahSakit/LihatCommentRS';
 
 export default class App extends Component {
 
@@ -24,8 +26,10 @@ const AppStackNavigator = createStackNavigator({
   CariFaskes: PageCariFaskes,
   PageContact: PageContact,
   PageArtikel: PageArtikel,
+  LihatCommentRS: LihatCommentRS,
   DetailListViewRS: DetailListViewRS,
   CommentRS: CommentRS,
   PageLoginFB: PageLoginFB,
+  OfflinePage: OfflinePage,
   DetailFaskesRS: DetailFaskesRS
 });
