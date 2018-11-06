@@ -8,6 +8,7 @@ import platform from '../native-base-theme/variables/platform';
 import Sidebar from './sidebar';
 import AppHeader from './AppHeader';
 import AppBody from './AppBody';
+import OfflineNotice from './OfflineNotice';
 /*Component*/
 
 export default class Home extends Component {
@@ -16,8 +17,8 @@ export default class Home extends Component {
     header: null
   }	
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.state = {
       drawerType: 'overlay',
       openDrawerOffset:100,
@@ -36,7 +37,7 @@ export default class Home extends Component {
       acceptPan: true,
       tapToClose: false,
       negotiatePan: false,
-      side: "top",
+      side: "top"
     };
   }  
 
@@ -51,6 +52,7 @@ export default class Home extends Component {
   render() {
     return (
           <StyleProvider style={getTheme(platform)}>
+
             <Drawer
               type={this.state.drawerType}
               animation={this.state.animation}
@@ -73,6 +75,7 @@ export default class Home extends Component {
               content={<Sidebar/>}
               onClose={() => this.closeDrawer()} >
                 <AppHeader openDrawer={this.openDrawer.bind(this)} />
+                <OfflineNotice navigation={this.props.navigation} />
                 <AppBody navigation={this.props.navigation} />
             </Drawer>
           </StyleProvider>

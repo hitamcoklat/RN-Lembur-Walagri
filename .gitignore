@@ -54,3 +54,8 @@ buck-out/
 
 # Bundle artifact
 *.jsbundle
+
+# custom gw
+android/app/src/main/res/values/strings.xml
+android/gradle.properties
+android/app/build.gradle

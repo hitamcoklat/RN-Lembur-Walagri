@@ -3,12 +3,15 @@ import {
   Text,
 } from 'react-native';
 
-import {Header,Left,Button,Icon,Right,Body,Title} from 'native-base';
+import {Header,Left,Button,Icon,Right,Body,Title,StyleProvider} from 'native-base';
+import getTheme from '../native-base-theme/components';
+import platform from '../native-base-theme/variables/platform';
 
 export default class AppHeader extends Component {
 
 	render() {
 		return (
+			<StyleProvider style={getTheme(platform)}>
 		    <Header>
 		      <Left>
 		        <Button transparent
@@ -22,6 +25,7 @@ export default class AppHeader extends Component {
 		      </Body>
 		      <Right />
 		    </Header>
+		    </StyleProvider>
 		);
 	}
 }
