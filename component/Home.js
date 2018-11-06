@@ -17,8 +17,8 @@ export default class Home extends Component {
     header: null
   }	
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.state = {
       drawerType: 'overlay',
       openDrawerOffset:100,
@@ -37,7 +37,7 @@ export default class Home extends Component {
       acceptPan: true,
       tapToClose: false,
       negotiatePan: false,
-      side: "top",
+      side: "top"
     };
   }  
 

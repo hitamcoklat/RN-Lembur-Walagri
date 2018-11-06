@@ -6,17 +6,13 @@ export default class MenuFooter extends Component {
     return (
 	    <Footer>
 	      <FooterTab>
-	        <Button vertical>
-	          <Icon name="heartbeat" />
-	          <Text>Sekitar</Text>
-	        </Button>
-	        <Button onPress={() => this.props.navigation.navigate('CariFaskes')} vertical>
+	        <Button onPress={() => this.props.navigation.push('PageCari')} vertical>
 	          <Icon name="search" />
 	          <Text>Cari</Text>
 	        </Button>
 	        <Button onPress={() => this.props.navigation.navigate('PageContact')} vertical>
 	          <Icon name="feed" />
-	          <Text>Hubungi</Text>
+	          <Text>Tentang</Text>
 	        </Button>
 	        <Button onPress={() => this.props.navigation.navigate('PageLoginFB')} vertical>
 	          <Icon name="user" />

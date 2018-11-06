@@ -8,17 +8,24 @@ import {
   NetInfo
 } from 'react-native';
 import Permissions from 'react-native-permissions'
-import { Badge, Container, Content, Title, Footer, FooterTab, Button, Icon, Text, View, Fab } from 'native-base';
+import { Badge, StyleProvider, Left, Header, Body, Container, Content, Title, Footer, FooterTab, Button, Icon, Text, View, Fab, Right } from 'native-base';
 import PopupDialog, { DialogTitle, SlideAnimation } from 'react-native-popup-dialog';
 import HTML from 'react-native-render-html';
 import Mapbox from '@mapbox/react-native-mapbox-gl';
+import getTheme from '../native-base-theme/components';
+import platform from '../native-base-theme/variables/platform';
 Mapbox.setAccessToken('pk.eyJ1IjoiaGl0YW1jb2tsYXQiLCJhIjoiY2prbmZmOHcyMHJhczNybW5rbWhvMmNqYSJ9.xJu-SnSLbjIO6z-pmzn2Vw');
 
 import customMarker from '../assets/icon-marker.png';
 import MenuFooter from './_menuFooter';
 import { API_URL } from './Config';
+import OfflineNotice from './OfflineNotice';
 
-export default class AppBody extends Component {
+export default class AppHome extends Component {
+
+  static navigationOptions = {
+    header: null
+  }   
 
   constructor(props) {
     super(props);
@@ -27,6 +34,7 @@ export default class AppBody extends Component {
       lokasiLongitude: 0,
       lokasiLatitude: 0,
       kodeFaskes: '',
+      hideFab: false,
       isConnected: true,
       isLocation: 'authorized',
       namaFaskes: '',
@@ -56,7 +64,8 @@ export default class AppBody extends Component {
   onDismissedDialog() {
     this.setState({ 
       showBtnSelengkapnyaRS: false, 
-      showBtnSelengkapnyaPus: false 
+      showBtnSelengkapnyaPus: false,
+      hideFab: false
     });
   }
 
@@ -75,6 +84,7 @@ export default class AppBody extends Component {
     }    
 
     this.setState({
+      hideFab: true,
       infoContent: desc,
       kodeFaskes: this.state.arrayKordinat[idFaskes].kode_faskes,
       namaFaskes: this.state.arrayKordinat[idFaskes].nama_faskes,
@@ -150,6 +160,10 @@ export default class AppBody extends Component {
     console.warn(`ERROR(${err.code}): ${err.message}`);
   }
 
+  beresMap() {
+    console.log('telah dirender');
+  }
+
   render() {     
 
     const slideAnimation = new SlideAnimation({
@@ -166,9 +180,22 @@ export default class AppBody extends Component {
                           namaFaskes: this.state.namaFaskes,
                           })} block rounded bordered primary><Icon style={{ color: '#3F51B5', marginRight: -10}} name='info-circle' /><Text>Selengkapnya</Text></Button>) : (<Text></Text>);
     
-    return (       
-          <Container>          
+    return (
+    <StyleProvider style={getTheme(platform)}>     
+      
+      <Container>   
+        <OfflineNotice navigation={this.props.navigation} />          
+        <Header>
+          <Left>
+              <Icon style={{ color: 'white' }} name='medkit' />            
+          </Left>        
+          <Body>
+            <Title>Lembur Walagri</Title>             
+          </Body>
+          <Right />
+        </Header>                 
             <Mapbox.MapView
+                showUserLocation={true}
                 ref={(e) => { this.map = e; }}
                 styleURL={Mapbox.StyleURL.Street}
                 zoomLevel={13}
@@ -178,17 +205,20 @@ export default class AppBody extends Component {
                 style={styles.container}>
                 {this.renderAnnotations()}               
             </Mapbox.MapView>
-            <View>
-              <Fab
-                onPress={() => this.centerMap() }
-                active={this.state.active}
-                direction="up"
-                containerStyle={{ }}
-                style={{ backgroundColor: '#5067FF' }}
-                position="bottomRight">
-                <Icon name="street-view" />
-              </Fab>
-            </View>           
+            
+            {!this.state.hideFab && (
+              <View>
+                <Fab
+                  onPress={() => this.centerMap() }
+                  active={this.state.active}
+                  direction="up"
+                  containerStyle={{ }}
+                  style={{ backgroundColor: '#5067FF' }}
+                  position="bottomRight">
+                  <Icon name="street-view" />
+                </Fab>
+              </View>
+            )}
             
             <MenuFooter navigation={this.props.navigation} />
             
@@ -219,6 +249,7 @@ export default class AppBody extends Component {
                 </ScrollView>
             </PopupDialog>             
           </Container>
+          </StyleProvider>
     );
   }
 }
@@ -252,4 +283,4 @@ const styles = StyleSheet.create({
   } 
 });
 
-module.exports = AppBody;
+module.exports = AppHome;
